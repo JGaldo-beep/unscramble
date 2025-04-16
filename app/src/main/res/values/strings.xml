@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">unscramble</string>
+    <string name="title_app">Guess the fruit!</string>
+    <string name="instructions">💡Hint!: %s</string>
+    <string name="skip">Skip</string>
+    <string name="submit">Submit</string>
+    <string name="score">Score: %d</string>
+    <string name="word_count">%d/3</string>
+    <string name="enter_your_word">Enter your word</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_scored">"You scored: %d"</string>
+    <string name="exit">Exit</string>
+    <string name="play_again">Play Again</string>
+    <string name="wrong_guess">Wrong Guess!</string>
+    <!--  Values  -->
+    <string name="fruit1">Apple</string>
+    <string name="hint1">Keeps the doctor away</string>
+    <string name="fruit2">Banana</string>
+    <string name="hint2">Yellow and curved</string>
+    <string name="fruit3">Pineapple</string>
+    <string name="hint3">Tropical and spiky crown</string>
+    <string name="fruit4">Strawberry</string>
+    <string name="hint4">Red with tiny seeds outside</string>
+    <string name="fruit5">Watermelon</string>
+    <string name="hint5">Big, green, and juicy inside</string>
+    <string name="fruit6">Orange</string>
+    <string name="hint6">Citrus and full of vitamin C</string>
+    <string name="fruit7">Grapes</string>
+    <string name="hint7">Small and come in bunches</string>
+    <string name="fruit8">Mango</string>
+    <string name="hint8">Sweet and golden inside</string>
+    <string name="fruit9">Lemon</string>
+    <string name="hint9">Sour and yellow</string>
+    <string name="fruit10">Coconut</string>
+    <string name="hint10">Hard shell, white inside</string>
+</resources>
