@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -21,22 +21,31 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.unscramble.R
 import com.example.unscramble.data.Fruit
 import com.example.unscramble.data.allFruits
 
 @Composable
-fun GameScreen() {
+fun GameScreen(
+    gameViewModel: GameViewModel = viewModel(),
+) {
     val mediumPadding = dimensionResource(id = R.dimen.padding_medium)
-    val fruitToGuess = allFruits.random()
+    val context = LocalContext.current
+    val fruits = allFruits.map { context.getString(it.fruitResourceId) }
+    gameViewModel.setWords(fruits)
+    val gameUiState by gameViewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -52,7 +61,6 @@ fun GameScreen() {
             style = typography.titleLarge
         )
         GameLayout(
-            fruitToGuess = fruitToGuess,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(mediumPadding)
@@ -91,9 +99,13 @@ fun GameScreen() {
 
 @Composable
 fun GameLayout(
-    fruitToGuess: Fruit,
+    fruitToGuess: Fruit = Fruit(R.string.fruit1, R.string.hint1),
     modifier: Modifier = Modifier,
-    wordCount: Int = 0
+    wordCount: Int = 0,
+    userGuess: String = "",
+    onUserGuessChanged: (String) -> Unit = {},
+    isGuessWrong: Boolean = false,
+    onKeyboardDone: () -> Unit = {}
 ) {
     val fruitHint = stringResource(id = fruitToGuess.fruitHint)
     val mediumPadding = dimensionResource(R.dimen.padding_medium)
@@ -127,8 +139,8 @@ fun GameLayout(
                 style = typography.titleMedium
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = userGuess,
+                onValueChange = onUserGuessChanged,
                 shape = shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
@@ -139,7 +151,11 @@ fun GameLayout(
                 singleLine = true,
                 label = {
                     Text(text = stringResource(id = R.string.enter_your_word))
-                }
+                },
+                isError = isGuessWrong,
+                keyboardActions = KeyboardActions(
+                    onDone = { onKeyboardDone() }
+                )
             )
         }
     }
