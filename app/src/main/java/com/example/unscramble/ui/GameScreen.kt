@@ -129,6 +129,7 @@ fun GameLayout(
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
+                shape = shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = colorScheme.surface,
